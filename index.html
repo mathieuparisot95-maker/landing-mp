@@ -381,6 +381,24 @@
     .orb { animation: none; }
     .scan-line { display: none; }
   }
+
+  /* ---------- Mobile / coarse-pointer performance ---------- */
+  /* filter: blur(120px) + hue-rotate + canvas n² saturate the main thread on
+     low-end devices and delay click handlers. Keep visuals, drop the heavy stuff. */
+  @media (pointer: coarse), (max-width: 768px) {
+    .orb { filter: blur(70px); }
+    .orb-1 { animation: float1 22s ease-in-out infinite; }
+    .orb-2 { animation: float2 26s ease-in-out infinite; }
+    .orb-3 { animation: float3 18s ease-in-out infinite; }
+    .ambient-cycle { animation: none; }
+    .scan-line { display: none; }
+    #particleCanvas { display: none; }
+    .grid-bg { mask-image: none; -webkit-mask-image: none; opacity: .35; }
+    .modal-backdrop { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); background: rgba(3, 0, 20, 0.85); }
+  }
+
+  /* Kill click delay on mobile */
+  button, a, [role="button"], .cta, .ghost-btn, .submit-btn { touch-action: manipulation; }
 </style>
 </head>
 
@@ -879,12 +897,14 @@
       }
     }
 
-    // ---- Particles ----
-    drawParticles();
+    // ---- Particles (fine pointer only; mobile hides canvas via CSS) ----
+    if (finePointer) drawParticles();
 
     requestAnimationFrame(frame);
   }
-  if (!reduced) requestAnimationFrame(frame);
+  // Only run the interactive RAF on fine-pointer devices — on mobile it just
+  // jams the main thread and delays the Contact modal click.
+  if (!reduced && finePointer) requestAnimationFrame(frame);
 
   // Recompute char rects once they're mounted
   setTimeout(() => { if (h1Ready) cacheCharRects(); }, 2200);
