@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1200px; height: 630px;
+    background: #030014;
+    color: #f8fafc;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    overflow: hidden;
+  }
+  body {
+    position: relative;
+    padding: 80px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .orb { position: absolute; border-radius: 50%; filter: blur(100px); }
+  .orb-1 { width: 520px; height: 520px; background: #7c3aed; top: -140px; left: -140px; opacity: .65; }
+  .orb-2 { width: 600px; height: 600px; background: #06b6d4; bottom: -220px; right: -180px; opacity: .55; }
+  .orb-3 { width: 340px; height: 340px; background: #ec4899; top: -20px; right: 160px; opacity: .45; }
+
+  .top, .middle, .bottom { position: relative; z-index: 1; }
+  .middle { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 24px 0; }
+
+  .mark-wrap { display: flex; align-items: center; gap: 18px; }
+  .mark {
+    width: 72px; height: 72px; border-radius: 16px;
+    background: #0a0420;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mark svg { width: 48px; height: 48px; display: block; }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 9px 16px; border-radius: 9999px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(103,232,249,0.35);
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 12px; letter-spacing: 2.5px;
+    color: #67e8f9; text-transform: uppercase;
+  }
+  .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #22d3ee; box-shadow: 0 0 12px #22d3ee; }
+
+  h1 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 118px; line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 22px;
+    background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 28%, #67e8f9 58%, #f0abfc 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .baseline {
+    font-size: 28px; line-height: 1.3;
+    color: rgba(248,250,252,0.72);
+    max-width: 900px;
+  }
+
+  .pills { display: flex; gap: 14px; flex-wrap: wrap; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 11px 22px; border-radius: 9999px;
+    background: rgba(255,255,255,0.03);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 20px; font-weight: 500;
+    line-height: 1;
+  }
+  .pill .dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 12px currentColor; }
+  .pill-1 { color: #c4b5fd; border: 1px solid rgba(167,139,250,0.5); }
+  .pill-1 .dot { background: #a78bfa; color: #a78bfa; }
+  .pill-2 { color: #67e8f9; border: 1px solid rgba(34,211,238,0.5); }
+  .pill-2 .dot { background: #22d3ee; color: #22d3ee; }
+  .pill-3 { color: #f9a8d4; border: 1px solid rgba(236,72,153,0.5); }
+  .pill-3 .dot { background: #ec4899; color: #ec4899; }
+
+  .bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 16px; letter-spacing: 4px; font-weight: 500;
+    color: rgba(248,250,252,0.4);
+  }
+  .aurora {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(124,58,237,.7), rgba(6,182,212,.7), rgba(236,72,153,.7), transparent);
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="top">
+    <div class="mark-wrap">
+      <div class="mark">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#a78bfa"/>
+              <stop offset="50%" stop-color="#22d3ee"/>
+              <stop offset="100%" stop-color="#f472b6"/>
+            </linearGradient>
+          </defs>
+          <path d="M14 48 V18 L32 38 L50 18 V48" fill="none" stroke="url(#mg)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="chip"><span class="dot"></span>Expert Digital · 2026</div>
+    </div>
+  </div>
+
+  <div class="middle">
+    <h1>Mathieu Parisot.</h1>
+    <div class="baseline">Je conçois des expériences digitales qui convertissent.</div>
+
+    <div class="pills" style="margin-top: 32px;">
+      <span class="pill pill-1"><span class="dot"></span>Growth Marketing</span>
+      <span class="pill pill-2"><span class="dot"></span>Web Development</span>
+      <span class="pill pill-3"><span class="dot"></span>AI Expert</span>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <span>MATHIEUPARISOT.ME</span>
+    <span style="color: rgba(248,250,252,0.35); letter-spacing: 1px; font-family: 'DM Sans', sans-serif; text-transform: none; font-size: 14px;">Portfolio — v2026</span>
+  </div>
+
+  <div class="aurora"></div>
+</body>
+</html>
