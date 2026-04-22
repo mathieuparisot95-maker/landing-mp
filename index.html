@@ -519,6 +519,40 @@
 
   /* Kill click delay on mobile */
   button, a, [role="button"], .cta, .ghost-btn, .submit-btn { touch-action: manipulation; }
+
+  /* ---------- Certified partners strip ---------- */
+  .partners {
+    margin-top: 3.25rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1.1rem;
+  }
+  .partners-label {
+    display: inline-flex; align-items: center; gap: .75rem;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: .68rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(248, 250, 252, 0.38);
+  }
+  .partners-label::before, .partners-label::after {
+    content: ''; width: 36px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(248,250,252,0.18), transparent);
+  }
+  .partners-row {
+    display: flex; align-items: center; gap: 2.25rem;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .partners-row a {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 26px; opacity: .4;
+    transition: opacity .3s ease, transform .3s ease, filter .3s ease;
+  }
+  .partners-row a:hover, .partners-row a:focus-visible {
+    opacity: 1; transform: translateY(-2px);
+    filter: drop-shadow(0 0 12px rgba(103, 232, 249, 0.5));
+  }
+  .partners-row img { height: 22px; width: auto; display: block; }
+  @media (max-width: 640px) {
+    .partners-row { gap: 1.5rem; }
+    .partners-row img { height: 18px; }
+  }
 </style>
 </head>
 
@@ -601,9 +635,34 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/>
         </svg>
-        <span>LinkedIn</span>
+<span>LinkedIn</span>
       </a>
     </div>
+
+    <!-- Certified partners strip.
+         NOTE: these are brand marks from simpleicons.org. For the official
+         personalized "Business Partner" badges, download your own from each
+         partner portal and replace the src values below. -->
+    <section class="partners fade-up" style="animation-delay: 1.65s" aria-label="Partenaires certifiés">
+      <span class="partners-label">Partenaire certifié</span>
+      <div class="partners-row">
+        <a href="https://business.linkedin.com/marketing-solutions/success/partners" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Ads Partner">
+          <img src="https://cdn.simpleicons.org/linkedin/ffffff" alt="LinkedIn" loading="lazy" width="22" height="22" />
+        </a>
+        <a href="https://www.facebook.com/business/partner-directory" target="_blank" rel="noopener noreferrer" aria-label="Meta Business Partner">
+          <img src="https://cdn.simpleicons.org/meta/ffffff" alt="Meta" loading="lazy" width="22" height="22" />
+        </a>
+        <a href="https://www.hubspot.com/partners" target="_blank" rel="noopener noreferrer" aria-label="HubSpot Solutions Partner">
+          <img src="https://cdn.simpleicons.org/hubspot/ffffff" alt="HubSpot" loading="lazy" width="22" height="22" />
+        </a>
+        <a href="https://webflow.com/partners" target="_blank" rel="noopener noreferrer" aria-label="Webflow Partner">
+          <img src="https://cdn.simpleicons.org/webflow/ffffff" alt="Webflow" loading="lazy" width="22" height="22" />
+        </a>
+        <a href="https://www.google.com/partners/" target="_blank" rel="noopener noreferrer" aria-label="Google Partner">
+          <img src="https://cdn.simpleicons.org/google/ffffff" alt="Google" loading="lazy" width="22" height="22" />
+        </a>
+      </div>
+    </section>
 
   </main>
 
