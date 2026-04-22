@@ -548,7 +548,10 @@
     opacity: 1; transform: translateY(-2px);
     filter: drop-shadow(0 0 12px rgba(103, 232, 249, 0.5));
   }
-  .partners-row img { height: 22px; width: auto; display: block; }
+  .partners-row img {
+    height: 22px; width: auto; display: block;
+    filter: brightness(0) invert(1);
+  }
   @media (max-width: 640px) {
     .partners-row { gap: 1.5rem; }
     .partners-row img { height: 18px; }
@@ -639,27 +642,24 @@
       </a>
     </div>
 
-    <!-- Certified partners strip.
-         NOTE: these are brand marks from simpleicons.org. For the official
-         personalized "Business Partner" badges, download your own from each
-         partner portal and replace the src values below. -->
+    <!-- Certified partners strip. Logos served locally from /partners/ -->
     <section class="partners fade-up" style="animation-delay: 1.65s" aria-label="Partenaires certifiés">
       <span class="partners-label">Partenaire certifié</span>
       <div class="partners-row">
         <a href="https://business.linkedin.com/marketing-solutions/success/partners" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Ads Partner">
-          <img src="https://cdn.simpleicons.org/linkedin/ffffff" alt="LinkedIn" loading="lazy" width="22" height="22" />
+          <img src="partners/linkedin.svg" alt="LinkedIn" loading="lazy" width="22" height="22" />
         </a>
         <a href="https://www.facebook.com/business/partner-directory" target="_blank" rel="noopener noreferrer" aria-label="Meta Business Partner">
-          <img src="https://cdn.simpleicons.org/meta/ffffff" alt="Meta" loading="lazy" width="22" height="22" />
+          <img src="partners/meta.svg" alt="Meta" loading="lazy" width="22" height="22" />
         </a>
         <a href="https://www.hubspot.com/partners" target="_blank" rel="noopener noreferrer" aria-label="HubSpot Solutions Partner">
-          <img src="https://cdn.simpleicons.org/hubspot/ffffff" alt="HubSpot" loading="lazy" width="22" height="22" />
+          <img src="partners/hubspot.svg" alt="HubSpot" loading="lazy" width="22" height="22" />
         </a>
         <a href="https://webflow.com/partners" target="_blank" rel="noopener noreferrer" aria-label="Webflow Partner">
-          <img src="https://cdn.simpleicons.org/webflow/ffffff" alt="Webflow" loading="lazy" width="22" height="22" />
+          <img src="partners/webflow.svg" alt="Webflow" loading="lazy" width="22" height="22" />
         </a>
         <a href="https://www.google.com/partners/" target="_blank" rel="noopener noreferrer" aria-label="Google Partner">
-          <img src="https://cdn.simpleicons.org/google/ffffff" alt="Google" loading="lazy" width="22" height="22" />
+          <img src="partners/google.svg" alt="Google" loading="lazy" width="22" height="22" />
         </a>
       </div>
     </section>
