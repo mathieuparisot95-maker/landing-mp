@@ -114,19 +114,64 @@
   @keyframes shimmer { 0%,100% { background-position: 0% 50% } 50% { background-position: 100% 50% } }
 
   /* ---------- H1 reveal ---------- */
+  .word { display: inline-block; white-space: nowrap; }
   .char { display: inline-block; opacity: 0; transform: translateY(80%) rotateX(-40deg); transform-origin: 50% 100%; animation: charIn 0.9s cubic-bezier(.22,.9,.22,1) forwards; }
-  .char.space { width: 0.4em; }
   @keyframes charIn { to { opacity: 1; transform: translateY(0) rotateX(0) } }
 
   /* Each char keeps its own gradient — parent background-clip doesn't propagate to inline-block children */
   .gradient-text .char {
-    background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 28%, #67e8f9 55%, #f0abfc 85%, #ffffff 100%);
-    background-size: 200% 200%;
+    background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 25%, #67e8f9 50%, #f0abfc 80%, #ffffff 100%);
+    background-size: 300% 300%;
+    background-position: var(--mx, 50%) var(--my, 50%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: charIn 0.9s cubic-bezier(.22,.9,.22,1) forwards, shimmer 12s ease-in-out infinite;
+    animation: charIn 0.9s cubic-bezier(.22,.9,.22,1) forwards;
+    will-change: transform;
   }
+
+  /* 3D tilt wrapper on H1 */
+  #hero-title { perspective: 1400px; }
+  #hero-title .gradient-text {
+    display: inline-block;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  /* Particle canvas */
+  #particleCanvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    opacity: .75;
+    mix-blend-mode: screen;
+  }
+
+  /* Footer */
+  .site-footer {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    display: flex; justify-content: center; align-items: center;
+    padding: 1.5rem;
+    z-index: 20;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: .75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(248,250,252,0.45);
+    pointer-events: none;
+  }
+  .site-footer a {
+    pointer-events: auto;
+    position: relative;
+    transition: color .3s ease, letter-spacing .4s ease;
+  }
+  .site-footer a::before {
+    content: ''; position: absolute; left: 50%; bottom: -4px;
+    width: 0; height: 1px; background: linear-gradient(90deg, #7c3aed, #06b6d4, #ec4899);
+    transition: width .4s cubic-bezier(.22,.9,.22,1), left .4s cubic-bezier(.22,.9,.22,1);
+  }
+  .site-footer a:hover { color: #fff; letter-spacing: 0.3em; }
+  .site-footer a:hover::before { width: 100%; left: 0; }
 
   .fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp .9s cubic-bezier(.22,.9,.22,1) forwards; }
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0) } }
@@ -270,6 +315,7 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
+    <canvas id="particleCanvas"></canvas>
     <div class="scan-line"></div>
     <div class="absolute inset-0" style="background: radial-gradient(ellipse at top, rgba(124,58,237,0.12), transparent 50%), radial-gradient(ellipse at bottom, rgba(6,182,212,0.08), transparent 60%);"></div>
   </div>
@@ -311,7 +357,7 @@
     <!-- H1 -->
     <h1 id="hero-title"
         class="font-display font-bold tracking-tight leading-[0.92]
-               text-[clamp(3.25rem,11vw,10rem)] max-w-6xl"
+               text-[clamp(3.25rem,10vw,9.5rem)]"
         aria-label="Mathieu Parisot">
       <span class="gradient-text" aria-hidden="true" data-splittext>Mathieu Parisot.</span>
     </h1>
@@ -331,21 +377,20 @@
         </svg>
       </button>
 
-      <a href="#about" class="ghost-btn inline-flex items-center gap-2" data-scroll-hint>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 5v14M5 12l7 7 7-7"/>
+      <a href="https://www.linkedin.com/in/mathieuparisot1/" target="_blank" rel="noopener noreferrer" class="ghost-btn inline-flex items-center gap-2" aria-label="Voir le profil LinkedIn de Mathieu Parisot">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/>
         </svg>
-        <span>Découvrir</span>
+        <span>LinkedIn</span>
       </a>
     </div>
 
-    <!-- Meta row -->
-    <div class="mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-white/40 font-mono fade-up" style="animation-delay: 1.6s">
-      <span>[ Portfolio ]</span>
-      <span>[ v2026 ]</span>
-      <span>[ Digital Architect ]</span>
-    </div>
   </main>
+
+  <!-- Footer -->
+  <footer class="site-footer fade-up" style="animation-delay: 1.8s">
+    <a href="https://mathieuparisot.me" target="_blank" rel="noopener noreferrer">mathieuparisot.me</a>
+  </footer>
 
   <!-- Bottom aurora line -->
   <div aria-hidden="true" class="fixed bottom-0 left-0 right-0 h-px z-10" style="background: linear-gradient(90deg, transparent, rgba(124,58,237,.6), rgba(6,182,212,.6), rgba(236,72,153,.6), transparent);"></div>
@@ -397,10 +442,18 @@
             </div>
           </div>
 
-          <div class="field">
-            <input type="text" id="company" name="company" maxlength="120" placeholder=" " autocomplete="organization" />
-            <label for="company">Société <span class="opacity-50">(optionnel)</span></label>
-            <span class="underline"></span>
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div class="field">
+              <input type="tel" id="phone" name="phone" required pattern="[+0-9\s().\-]{6,}" minlength="6" maxlength="30" placeholder=" " autocomplete="tel" inputmode="tel" />
+              <label for="phone">Téléphone</label>
+              <span class="underline"></span>
+            </div>
+
+            <div class="field">
+              <input type="text" id="company" name="company" maxlength="120" placeholder=" " autocomplete="organization" />
+              <label for="company">Société <span class="opacity-50">(optionnel)</span></label>
+              <span class="underline"></span>
+            </div>
           </div>
 
           <div class="field">
@@ -460,17 +513,29 @@
   };
   tick(); setInterval(tick, 30_000);
 
-  // ---------- Split H1 into animated chars ----------
+  // ---------- Split H1 into animated chars (grouped by word, so chars never break mid-word) ----------
   const splitEls = document.querySelectorAll('[data-splittext]');
   splitEls.forEach(el => {
     const text = el.textContent;
     el.textContent = '';
-    [...text].forEach((ch, i) => {
-      const span = document.createElement('span');
-      span.className = 'char' + (ch === ' ' ? ' space' : '');
-      span.textContent = ch === ' ' ? '\u00A0' : ch;
-      span.style.animationDelay = (0.1 + i * 0.04) + 's';
-      el.appendChild(span);
+    const words = text.split(' ');
+    let i = 0;
+    words.forEach((word, wi) => {
+      const wordSpan = document.createElement('span');
+      wordSpan.className = 'word';
+      [...word].forEach(ch => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.textContent = ch;
+        span.style.animationDelay = (0.1 + i * 0.04) + 's';
+        wordSpan.appendChild(span);
+        i++;
+      });
+      el.appendChild(wordSpan);
+      if (wi < words.length - 1) {
+        el.appendChild(document.createTextNode(' '));
+        i++;
+      }
     });
   });
 
@@ -488,14 +553,129 @@
   const ring = document.querySelector('.cursor-ring');
   let dx = -100, dy = -100, rx = -100, ry = -100, cx = -100, cy = -100;
 
-  if (finePointer && dot && ring) {
-    window.addEventListener('pointermove', e => { cx = e.clientX; cy = e.clientY; }, { passive: true });
+  // Always track cursor coords (used by particles + char magnetism even if dot hidden)
+  window.addEventListener('pointermove', e => { cx = e.clientX; cy = e.clientY; }, { passive: true });
 
+  if (finePointer && dot && ring) {
     document.querySelectorAll('button, a, [role="button"], input, textarea, label').forEach(el => {
       el.addEventListener('pointerenter', () => ring.classList.add('grow'));
       el.addEventListener('pointerleave', () => ring.classList.remove('grow'));
     });
   }
+
+  // ---------- Particle constellation (Canvas) ----------
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas ? canvas.getContext('2d') : null;
+  let particles = [];
+  let W = window.innerWidth, H = window.innerHeight;
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  function resizeCanvas() {
+    if (!canvas) return;
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+
+  function initParticles() {
+    const count = Math.min(70, Math.floor((W * H) / 24000));
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        r: Math.random() * 1.4 + 0.4,
+        hue: 190 + Math.random() * 90, // cyan → violet → pink
+      });
+    }
+  }
+
+  function drawParticles() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, H);
+
+    // Update
+    for (const p of particles) {
+      const dxm = p.x - cx;
+      const dym = p.y - cy;
+      const d2 = dxm * dxm + dym * dym;
+      const R = 140;
+      if (d2 < R * R && d2 > 0.01) {
+        const d = Math.sqrt(d2);
+        const f = (1 - d / R) * 0.9;
+        p.vx += (dxm / d) * f * 0.08;
+        p.vy += (dym / d) * f * 0.08;
+      }
+      p.vx *= 0.97; p.vy *= 0.97;
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -20) p.x = W + 20; else if (p.x > W + 20) p.x = -20;
+      if (p.y < -20) p.y = H + 20; else if (p.y > H + 20) p.y = -20;
+    }
+
+    // Links
+    const LINK = 130;
+    const LINK2 = LINK * LINK;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const p1 = particles[i], p2 = particles[j];
+        const ddx = p1.x - p2.x, ddy = p1.y - p2.y;
+        const dd = ddx * ddx + ddy * ddy;
+        if (dd < LINK2) {
+          const o = (1 - Math.sqrt(dd) / LINK) * 0.22;
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = `hsla(${(p1.hue + p2.hue) / 2}, 85%, 70%, ${o})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Dots
+    for (const p of particles) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${p.hue}, 90%, 75%, 0.9)`;
+      ctx.fill();
+    }
+  }
+
+  if (ctx && !reduced) {
+    resizeCanvas();
+    initParticles();
+    window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+  }
+
+  // ---------- H1 interactivity (per-char magnetism + 3D tilt) ----------
+  const heroTitle = document.getElementById('hero-title');
+  const tiltEl = heroTitle ? heroTitle.querySelector('.gradient-text') : null;
+  let h1Chars = [];
+  const charState = new WeakMap();
+  let h1Ready = false;
+
+  // Chars are injected async after split — grab them next tick + allow entrance animation to finish
+  setTimeout(() => {
+    h1Chars = [...document.querySelectorAll('#hero-title .char')];
+    h1Chars.forEach(el => charState.set(el, { x: 0, y: 0, tx: 0, ty: 0, baseRect: null }));
+    h1Ready = true;
+  }, 2100);
+
+  // Cache char rects (recompute on resize/scroll)
+  function cacheCharRects() {
+    h1Chars.forEach(el => {
+      const r = el.getBoundingClientRect();
+      charState.get(el).cx = r.left + r.width / 2;
+      charState.get(el).cy = r.top + r.height / 2;
+    });
+  }
+  window.addEventListener('resize', () => { if (h1Ready) cacheCharRects(); });
+  window.addEventListener('scroll', () => { if (h1Ready) cacheCharRects(); }, { passive: true });
 
   // ---------- Magnetic buttons ----------
   const magnets = document.querySelectorAll('.magnetic');
@@ -519,6 +699,7 @@
 
   // ---------- RAF loop: lerp everything ----------
   const lerp = (a, b, t) => a + (b - a) * t;
+  let tiltRX = 0, tiltRY = 0;
 
   function frame() {
     tx = lerp(tx, mx, 0.08);
@@ -542,9 +723,50 @@
       el.style.transform = `translate3d(${s.x}px, ${s.y}px, 0)`;
     });
 
+    // ---- H1 3D tilt (always on) ----
+    if (tiltEl) {
+      const targetRX = (my - 0.5) * -6;
+      const targetRY = (mx - 0.5) * 8;
+      tiltRX = lerp(tiltRX, targetRX, 0.08);
+      tiltRY = lerp(tiltRY, targetRY, 0.08);
+      tiltEl.style.transform = `rotateX(${tiltRX.toFixed(2)}deg) rotateY(${tiltRY.toFixed(2)}deg)`;
+    }
+
+    // ---- H1 char magnetism (after entrance animation completes) ----
+    if (h1Ready && h1Chars.length) {
+      const R = 140;
+      for (let i = 0; i < h1Chars.length; i++) {
+        const el = h1Chars[i];
+        const s = charState.get(el);
+        if (s.cx === undefined) {
+          const r = el.getBoundingClientRect();
+          s.cx = r.left + r.width / 2;
+          s.cy = r.top + r.height / 2;
+        }
+        const dxc = cx - s.cx, dyc = cy - s.cy;
+        const d = Math.hypot(dxc, dyc);
+        if (d < R && d > 0.01) {
+          const force = Math.pow(1 - d / R, 2) * 26;
+          s.tx = -(dxc / d) * force;
+          s.ty = -(dyc / d) * force;
+        } else {
+          s.tx = 0; s.ty = 0;
+        }
+        s.x = lerp(s.x, s.tx, 0.14);
+        s.y = lerp(s.y, s.ty, 0.14);
+        el.style.transform = `translate3d(${s.x.toFixed(2)}px, ${s.y.toFixed(2)}px, 0)`;
+      }
+    }
+
+    // ---- Particles ----
+    drawParticles();
+
     requestAnimationFrame(frame);
   }
   if (!reduced) requestAnimationFrame(frame);
+
+  // Recompute char rects once they're mounted
+  setTimeout(() => { if (h1Ready) cacheCharRects(); }, 2200);
 
   // ---------- Contact modal ----------
   const modal = document.getElementById('contactModal');
